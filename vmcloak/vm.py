@@ -30,8 +30,8 @@ class VirtualBox(Machinery):
 
         try:
             ret = subprocess.check_output(cmd)
-        except Exception as e:
-            log.error('[-] Error running command: %s', e)
+        except subprocess.CalledProcessError as e:
+            log.error('[-] Error running command: %s\nOutput: %s', e, e.output)
             raise CommandError
 
         return ret.strip()

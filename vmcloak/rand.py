@@ -3,6 +3,7 @@
 # This file is part of VMCloak - http://www.vmcloak.org/.
 # See the file 'docs/LICENSE.txt' for copying permission.
 
+import uuid
 import random
 import string
 
@@ -32,6 +33,4 @@ def random_serial(length=None):
                    for _ in xrange(length))
 
 def random_uuid():
-    value = random_serial(32)
-    return '-'.join((value[:8], value[8:12], value[12:16],
-                     value[16:20], value[20:32]))
+    return str(uuid.uuid4())

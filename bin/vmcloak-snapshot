@@ -56,6 +56,7 @@ def main():
     m.cpus(args.cpus or image.cpus)
     m.mouse("usbtablet")
     m.ramsize(ramsize)
+    m.init_vm(image.hwconf_profile)
     m.attach_hd(image.path, multi=True)
     m.hostonly(nictype=h.nictype, adapter=args.adapter or image.adapter)
     m.start_vm(visible=args.vm_visible)

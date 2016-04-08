@@ -11,7 +11,8 @@ import os
 from vmcloak.constants import VMCLOAK_ROOT
 
 log = logging.getLogger(__name__)
-HWCONF_PATH = os.path.join(VMCLOAK_ROOT, 'data', 'hwconf')
+HWCONF_PATH = os.path.join(os.getenv('HOME'), '.vmcloak', 'hwconf')
+
 
 class Configuration(object):
     def __init__(self):

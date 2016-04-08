@@ -41,12 +41,15 @@ def main():
     parser.add_argument("--tempdir", type=str, default=tempfile.gettempdir(), help="Temporary directory to build the ISO file.")
     parser.add_argument("--resolution", type=str, default="1024x768", help="Screen resolution.")
     parser.add_argument("--vm-visible", action="store_true", help="Start the Virtual Machine in GUI mode.")
+    parser.add_argument("--hwconf-profile", type=str, help="Hardware configuration profile.")
     parser.add_argument("-d", "--debug", action="store_true", help="Install Virtual Machine in debug mode.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose logging.")
     args = parser.parse_args()
 
     if args.verbose:
         log.setLevel(logging.DEBUG)
+        logging.getLogger('vmcloak').setLevel(logging.DEBUG)
+        log.debug("Log set to verbose")
 
     session = Session()
     image = session.query(Image).filter_by(name=args.name).first()
@@ -134,6 +137,7 @@ def main():
     m.cpus(args.cpus)
     m.mouse("usbtablet")
     m.ramsize(ramsize)
+    m.init_vm(profile=args.hwconf_profile)
     m.create_hd(hdd_path)
     m.attach_iso(iso_path)
     m.hostonly(nictype=h.nictype, adapter=args.adapter)
@@ -155,7 +159,7 @@ def main():
                       servicepack="%s" % h.service_pack, mode="normal",
                       ipaddr=args.ip, port=args.port, adapter=args.adapter,
                       netmask=args.netmask, gateway=args.gateway,
-                      cpus=args.cpus))
+                      cpus=args.cpus, hwconf_profile=args.hwconf_profile))
     session.commit()
 
 if __name__ == "__main__":

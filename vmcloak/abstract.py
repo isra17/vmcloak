@@ -10,7 +10,7 @@ import subprocess
 import tempfile
 import time
 
-from vmcloak.conf import load_hwconf
+from vmcloak.conf import load_hwconf, HWCONF_PATH
 from vmcloak.constants import VMCLOAK_ROOT
 from vmcloak.exceptions import DependencyError
 from vmcloak.misc import copytreelower, copytreeinto, sha1_file
@@ -126,7 +126,8 @@ class Machinery(object):
 
         def _init_vm(path, fields):
             for key, value in fields.items():
-                key = path + '/' + key
+                if path:
+                    key = path + '/' + key
                 if isinstance(value, dict):
                     _init_vm(key, value)
                 else:
@@ -147,6 +148,9 @@ class Machinery(object):
                                     value = random_serial(length)
                                 elif value.startswith('<UUID>'):
                                     value = random_uuid()
+                                elif value.startswith('<HWCONF>'):
+                                    value = os.path.join(HWCONF_PATH, \
+                                                         value.split('/', 1)[1])
 
                     if value is None:
                         value = "To be filled by O.E.M."

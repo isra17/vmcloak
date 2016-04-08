@@ -63,14 +63,10 @@ if __name__ == '__main__':
     parser.add_argument('profile', type=str, help='Name of this configuration.')
     parser.add_argument('--dmidecode', type=str, help='Path to dmidecode(8).')
     parser.add_argument('--lshw', type=str, help='Path to lshw(1).')
-    parser.add_argument('--repository', type=str, help='Path to Git repository.')
 
     args = parser.parse_args()
 
-    if args.repository:
-        dirpath = os.path.join(args.repository, 'vmcloak', 'data', 'hwconf')
-    else:
-        dirpath = os.path.join(os.getenv('HOME'), '.vmcloak', 'hwconf')
+    dirpath = os.path.join(os.getenv('HOME'), '.vmcloak', 'hwconf')
 
     if not os.geteuid() and dirpath.startswith('/root/'):
         print '[!] You are running this tool from a root shell, this will'
