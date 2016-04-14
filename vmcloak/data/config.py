@@ -40,9 +40,6 @@ VBOX_CONFIG = {
 
         DmiOEMVBoxVer=('oem_vbox', 'ver'),
         DmiOEMVBoxRev=('oem_vbox', 'rev'),
-
-        BiosRom=('bios', 'bios_rom_path'),
-        LanBootRom=('bios', 'lan_boot_rom_path'),
     ),
     'VBoxInternal/Devices/piix3ide/0/Config': {
         'Port0': dict(
@@ -73,10 +70,8 @@ VBOX_CONFIG = {
     },
     'VBoxInternal/Devices/acpi/0/Config': dict(
         AcpiOemId=('acpi', 'oem'),
-        DsdtFilePath=('acpi', 'dsdt_path'),
-        SsdtFilePath=('acpi', 'ssdt_path'),
-    ),
-    'VBoxInternal/Devices/vga/0/Config': dict(
-        BiosRom=('vga', 'bios_rom_path'),
+        AcpiCreatorId=('acpi', 'creator'),
+        AcpiCreatorRev=('acpi', 'creator_rev'),
+        CustomTable=('acpi', 'table_path'),
     ),
 }
